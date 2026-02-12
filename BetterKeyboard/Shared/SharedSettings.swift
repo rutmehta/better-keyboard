@@ -3,7 +3,9 @@ import Foundation
 /// Thread-safe read/write access to App Groups shared settings.
 /// Used by both the containing app and the keyboard extension.
 final class SharedSettings {
-    static let shared = SharedSettings()
+    // UserDefaults is thread-safe at runtime; nonisolated(unsafe) silences
+    // the Swift 6 concurrency checker for this cross-isolation singleton.
+    nonisolated(unsafe) static let shared = SharedSettings()
 
     private let defaults: UserDefaults
 

@@ -6,6 +6,7 @@ protocol AIAnalysisService {
 }
 
 /// Routes deep link URLs to the appropriate app flow.
+@MainActor
 final class DeepLinkHandler {
 
     static let shared = DeepLinkHandler()
@@ -129,7 +130,7 @@ final class DeepLinkHandler {
         guard let scene = UIApplication.shared.connectedScenes
             .compactMap({ $0 as? UIWindowScene })
             .first,
-              let rootVC = scene.windows.first(where: \.isKeyWindow)?.rootViewController else {
+              let rootVC = scene.windows.first { $0.isKeyWindow }?.rootViewController else {
             return nil
         }
         return findTopPresented(from: rootVC)
@@ -152,7 +153,7 @@ final class DeepLinkHandler {
         guard let scene = UIApplication.shared.connectedScenes
             .compactMap({ $0 as? UIWindowScene })
             .first,
-              let rootVC = scene.windows.first(where: \.isKeyWindow)?.rootViewController else {
+              let rootVC = scene.windows.first { $0.isKeyWindow }?.rootViewController else {
             return nil
         }
         return rootVC as? MainTabViewController

@@ -24,7 +24,7 @@ enum AnalysisError: Error, LocalizedError {
 ///   4. Generate replies via AI (AIEngine)
 ///   5. Package into AIAnalysisResult
 ///   6. Save to SharedSettings for the keyboard extension to consume
-final class AIAnalysisCoordinator: AIAnalysisService {
+final class AIAnalysisCoordinator: AIAnalysisService, @unchecked Sendable {
 
     private let screenshotManager: ScreenshotManager
     private let ocrEngine: OCREngine

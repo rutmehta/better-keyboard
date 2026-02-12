@@ -2,15 +2,15 @@ name: BetterKeyboard
 options:
   bundleIdPrefix: com.betterkeyboard
   deploymentTarget:
-    iOS: "17.0"
-  xcodeVersion: "16.0"
+    iOS: "18.0"
   generateEmptyDirectories: true
 
 settings:
   base:
-    SWIFT_VERSION: "5.9"
+    SWIFT_VERSION: "6.0"
     TARGETED_DEVICE_FAMILY: "1"
-    IPHONEOS_DEPLOYMENT_TARGET: "17.0"
+    IPHONEOS_DEPLOYMENT_TARGET: "18.0"
+    SUPPORTED_PLATFORMS: "iphoneos iphonesimulator"
 
 targets:
   BetterKeyboard:
@@ -18,7 +18,11 @@ targets:
     platform: iOS
     sources:
       - path: App
+        excludes:
+          - "**/*.example.swift"
       - path: Shared
+        excludes:
+          - "**/*.example.swift"
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.betterkeyboard.app
@@ -34,6 +38,8 @@ targets:
     sources:
       - path: KeyboardExtension
       - path: Shared
+        excludes:
+          - "**/*.example.swift"
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.betterkeyboard.app.keyboard

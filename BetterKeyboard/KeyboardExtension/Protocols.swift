@@ -3,7 +3,7 @@ import UIKit
 // MARK: - Keyboard Action Delegate
 
 /// Implemented by KeyboardViewController to handle all key and swipe events.
-protocol KeyboardActionDelegate: AnyObject {
+@MainActor protocol KeyboardActionDelegate: AnyObject {
     func didTapCharacter(_ char: String)
     func didTapSpace()
     func didTapDelete()
@@ -20,7 +20,7 @@ protocol KeyboardActionDelegate: AnyObject {
 // MARK: - Suggestion Delegate
 
 /// Allows the input engine / swipe decoder to push suggestion updates to the UI.
-protocol SuggestionDelegate: AnyObject {
+@MainActor protocol SuggestionDelegate: AnyObject {
     func updateSuggestions(_ candidates: [String])
     func clearSuggestions()
 }

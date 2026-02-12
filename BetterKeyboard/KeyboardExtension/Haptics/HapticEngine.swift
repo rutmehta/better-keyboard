@@ -8,6 +8,7 @@ import UIKit
 /// - Automatically suspends after 5 seconds of inactivity and re-prepares on next trigger.
 ///
 /// Requires Full Access to be enabled (`hasFullAccess == true`).
+@MainActor
 final class HapticEngine {
 
     // MARK: - Singleton
