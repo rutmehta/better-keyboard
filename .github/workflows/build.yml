@@ -1,0 +1,37 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Select Xcode
+        run: sudo xcode-select -s /Applications/Xcode_16.app
+
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Generate private config from secrets
+        env:
+          PRODUCT_CONFIG_SWIFT: ${{ secrets.PRODUCT_CONFIG_SWIFT }}
+          PROMPT_TEMPLATES_SWIFT: ${{ secrets.PROMPT_TEMPLATES_SWIFT }}
+        run: ./BetterKeyboard/Scripts/generate-config.sh
+
+      - name: Generate Xcode project
+        run: cd BetterKeyboard && xcodegen generate
+
+      - name: Build
+        run: |
+          xcodebuild build \
+            -project BetterKeyboard/BetterKeyboard.xcodeproj \
+            -scheme BetterKeyboard \
+            -destination 'platform=iOS Simulator,name=iPhone 16' \
+            -skipPackagePluginValidation \
+            CODE_SIGNING_ALLOWED=NO
