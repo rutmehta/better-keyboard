@@ -39,3 +39,7 @@ Pods/
 
 # Generated files
 *.xcodeproj
+
+# Product strategy & prompts (private — see .example.swift files)
+BetterKeyboard/Shared/ProductConfig.swift
+BetterKeyboard/App/AI/PromptTemplates.swift

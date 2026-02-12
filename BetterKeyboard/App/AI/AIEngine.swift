@@ -150,47 +150,18 @@ final class AIEngine {
         }
     }
 
-    // MARK: - Prompt Engineering
+    // MARK: - Prompt Engineering (delegated to PromptTemplates)
 
     private func buildReplyPrompt(
         conversation: String,
         style: ReplyStyle,
         hostApp: HostAppCategory
     ) -> String {
-        let toneDirective: String
-        switch style {
-        case .auto:
-            toneDirective = hostApp.promptPrefix
-        case .flirty:
-            toneDirective = "You're helping craft a flirty and witty message. Be charming but not creepy."
-        case .professional:
-            toneDirective = "You're helping draft a professional message. Be clear, concise, and polished."
-        case .casual:
-            toneDirective = "You're helping with a casual message. Be friendly and natural."
-        case .funny:
-            toneDirective = "You're helping write a funny message. Be humorous but tasteful."
-        }
-
-        return """
-        \(toneDirective)
-
-        Below is a conversation extracted from a screenshot. Generate 3 reply options \
-        that the user could send as their next message. Each reply should be 1-3 sentences, \
-        feel natural, and match the conversation's tone.
-
-        Conversation:
-        \(conversation)
-
-        Generate exactly 3 replies. One per line. No numbering, no quotes, no bullet points.
-        """
+        PromptTemplates.replyPrompt(conversation: conversation, style: style, hostApp: hostApp)
     }
 
     private func buildCompletionPrompt(context: String, partial: String) -> String {
-        """
-        Context: \(context)
-        Current input: \(partial)
-        Complete this naturally in 1-5 words. Output only the completion, no explanation.
-        """
+        PromptTemplates.completionPrompt(context: context, partial: partial)
     }
 
     /// Parse the raw LLM response into individual reply strings.

@@ -77,37 +77,14 @@ enum HostAppCategory {
     case unknown(String)
 
     init(bundleId: String) {
-        switch bundleId {
-        case "com.hinge.Hinge", "com.cardify.tinder", "com.bumble.app":
-            self = .dating(bundleId)
-        case "com.apple.mobilemail", "com.google.Gmail", "com.microsoft.Office.Outlook":
-            self = .email(bundleId)
-        case "com.apple.MobileSMS", "net.whatsapp.WhatsApp", "com.slack.Slack":
-            self = .messaging(bundleId)
-        case "com.burbn.instagram", "com.linkedin.LinkedIn", "com.atebits.Tweetie2":
-            self = .social(bundleId)
-        default:
-            self = .unknown(bundleId)
-        }
+        self = ProductConfig.category(for: bundleId)
     }
 
     var defaultTone: ReplyStyle {
-        switch self {
-        case .dating: return .flirty
-        case .email: return .professional
-        case .messaging: return .casual
-        case .social: return .casual
-        case .unknown: return .casual
-        }
+        ProductConfig.defaultTone(for: self)
     }
 
     var promptPrefix: String {
-        switch self {
-        case .dating: return "You're helping craft a dating app message. Be charming and witty."
-        case .email: return "You're helping draft a professional email. Be clear and polished."
-        case .messaging: return "You're helping with a casual message. Be friendly and natural."
-        case .social: return "You're helping with a social media response. Be engaging."
-        case .unknown: return "You're helping write a message."
-        }
+        ProductConfig.promptPrefix(for: self)
     }
 }
